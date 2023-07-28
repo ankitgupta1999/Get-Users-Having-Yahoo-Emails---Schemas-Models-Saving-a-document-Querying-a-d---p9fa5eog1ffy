@@ -17,11 +17,23 @@ app.use(express.json());
 
 app.get("/",async function(req,res){
 
-    ids = [];
+    // ids = [];
+    const Users = await users.find({
+        email: {
+          $regex: '^.*@yahoo.com$',
+          $options: 'i',
+        },
+      });
+    
+      const ids = [];
+      for (const user of Users) {
+        ids.push(user._id);
+      }
+    
+      res.send( ids );
 
     //Complete Your code here
 
-    res.send(ids);
 
 });
 
